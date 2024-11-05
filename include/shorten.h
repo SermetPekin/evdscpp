@@ -75,14 +75,6 @@ std::string normalizeDelimiters(const std::string &input)
     return normalized;
 }
 
-int mainAA()
-{
-    std::string input = "TP.DK.USD.A\nTP.DK.EUR.A\nTP.DK.CHF.A-TP.DK.GBP.A";
-    std::string output = normalizeDelimiters(input);
-    std::cout << "Normalized string: " << output << std::endl;
-
-    return 0;
-}
 
 std::string capitalizeWords(const std::string &input)
 {
