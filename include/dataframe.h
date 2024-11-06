@@ -258,7 +258,8 @@ namespace evds
  
 
 void save_as_csv(const DataFrame &df, const std::string &filename, std::optional<char> delimiter  )
-{
+{   
+    static std::string NaNstr("") ;
     std::cout << "[saving csv] " << filename << "\n";
     std::ofstream file(filename);
 
@@ -267,7 +268,6 @@ void save_as_csv(const DataFrame &df, const std::string &filename, std::optional
         return;
     }
 
-    // Set default delimiter if none was provided
     char actual_delimiter = delimiter.value_or(';');
 
     auto column_names = df.get_column_names();
@@ -298,10 +298,10 @@ void save_as_csv(const DataFrame &df, const std::string &filename, std::optional
                 std::visit([&](const auto &value) {
                     using T = std::decay_t<decltype(value)>;
                     if constexpr (std::is_same_v<T, std::monostate>) {
-                        file << "NaN";
+                        file << NaNstr ;
                     } else if constexpr (std::is_same_v<T, double>) {
                         if (std::isnan(value))
-                            file << "NaN";
+                            file << NaNstr ;
                         else
                             file << value;
                     } else {
@@ -309,7 +309,7 @@ void save_as_csv(const DataFrame &df, const std::string &filename, std::optional
                     }
                 }, cell);
             } else {
-                file << "NaN";
+                file << NaNstr ;
             }
 
             if (col < column_names.size() - 1)
