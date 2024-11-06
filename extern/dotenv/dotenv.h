@@ -85,13 +85,15 @@ private:
     void load(const std::string &filepath)
     {
         std::ifstream file(filepath);
-        if (!file)
+
+                if (!file)
         {
-            std::cerr << "Could not open " << filepath << " file" << std::endl;
+            std::cerr << "Could not find " << filepath << " file" << std::endl;
             return;
         }
 
         std::string line;
+
         while (std::getline(file, line))
         {
             line = trim(line);
@@ -100,7 +102,7 @@ private:
 
             size_t delimiterPos = line.find('=');
             if (delimiterPos == std::string::npos)
-                continue; // Skip if no '=' is found
+                continue;  
 
             std::string key = trim(line.substr(0, delimiterPos));
             std::string value = trim(line.substr(delimiterPos + 1));

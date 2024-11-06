@@ -52,7 +52,6 @@ namespace evds
 {
 
     class DataFrame;
-
  
     void save_as_csv(const DataFrame &df, const std::string &filename, std::optional<char> delimiter = std::nullopt) ; 
     using Cell = std::variant<std::monostate, double, long long, std::string>;
