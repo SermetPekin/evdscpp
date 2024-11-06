@@ -89,6 +89,11 @@ You can obtain a free EVDS API key by registering on the EVDS website provided b
 # this will create two different files. One for the first index `bie_yssk` and one for these indexes TP.DK.USD.A-TP.DK.EUR.A 
 ./evdscpp bie_yssk,TP.DK.USD.A-TP.DK.EUR.A --cache true
 
+# indexes can be read from a text file as well 
+./evdscpp example.txt --cache true
+
+
+
 ```
 
 

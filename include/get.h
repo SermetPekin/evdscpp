@@ -1,21 +1,21 @@
 /*
  * evdscpp: An open-source data wrapper for accessing the EVDS API.
  * Author: Sermet Pekin
- * 
+ *
  * MIT License
- * 
+ *
  * Copyright (c) 2024 Sermet Pekin
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -24,7 +24,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 
 #include "dotenv_.h"
 
@@ -119,7 +118,7 @@ std::enable_if_t<is_cstring<T>::value, const char *> get_proxy_for_url(T url, T 
     return "";
 }
 
-std::string get_request_real(const GetParams &params, bool test);
+std::string get_request_real(const GetParams &params, bool test, bool auto_confirm);
 
 std::string get_request(const GetParams &params, const Config &config)
 {
@@ -143,16 +142,19 @@ std::string get_request(const GetParams &params, const Config &config)
         return cached_result;
     }
 
-    auto res = get_request_real(params, config.test);
+    if (!config.auto_confirm)
+        throw std::runtime_error("[2]Something is wrong with auto confirm");
+
+    auto res = get_request_real(params, config.test, config.auto_confirm);
     if (cache_option)
         cache.save_cache(fnc_name, res, params_str);
     return res;
 }
-std::string get_request_real(const GetParams &params, bool test)
+std::string get_request_real(const GetParams &params, bool test, bool auto_confirm)
 {
-    //  if (config.test)
+ 
 
-    if (!test & !evds::confirm("Request?", params.url, params.verbose))
+    if (!auto_confirm && !test && !evds::confirm("Request?", params.url, params.verbose))
     {
         std::cout << "Not requesting ...";
         throw std::runtime_error("Request was cancelled ");

@@ -17,4 +17,6 @@ build/
 evdscpp
 evdscpp.dSYM
 
+*.txt 
+!example.txt 
 
