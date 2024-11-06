@@ -30,7 +30,6 @@
 #ifndef dotenv__
 #define dotenv__
 #include "../extern/dotenv/dotenv.h"
-
 #include <iostream>
 
 using namespace std;

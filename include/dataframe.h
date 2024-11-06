@@ -42,14 +42,9 @@
 #include "../extern/nlohmann/json.hpp"
 #include "series.h"
 #include "header.h"
-
 #include <fstream>
 #include <iostream>
 #include <optional>
-
-
-
-
 #include <typeindex>
 #include <typeinfo>
 
